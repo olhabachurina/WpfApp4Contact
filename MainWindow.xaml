@@ -1,0 +1,48 @@
+﻿<Window x:Class="WpfApp4Contact.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp4Contact"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Source="contact.png" Width="150" Height="250" Margin="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+            <ListView x:Name="contactListView" Margin="10" Grid.Column="1">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="100"/>
+                        <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding LastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="100"/>
+                        <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="100"/>
+                        <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="200"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10">
+                <Button Content="Добавить контакт" Click="AddContactButton_Click"/>
+                <Button Content="Редактировать контакт" Click="EditContactButton_Click" Background="#CCFFCC" Margin="5"/>
+                <Button Content="Удалить контакт" Click="DeleteContactButton_Click"/>
+            </StackPanel>
+
+        </Grid>
+        <Window.Resources>
+            <Style TargetType="{x:Type TextBox}">
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError" Value="true">
+                        <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Window.Resources>
+        <Window.Background>
+            <SolidColorBrush Color="#FFFFCC"/>
+        </Window.Background>
+</Window>
+
